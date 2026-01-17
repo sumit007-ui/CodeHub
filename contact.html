@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <title>Contact</title>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1 class="logo" >
+            <a href="index.html">CodeHub</a>
+            </h1>
+
+            <div class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="project.html">Projects</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://www.youtube.com/@CodeHub-j9o4q" target="_blank">YouTube</a>
+            </nav>
+
+            <div class="github">
+                <a href="https://github.com/sumit007-ui">Github</a>
+            </div>
+            
+        </header>
+        
+        
+     <section id="contact">
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <a href="mailto:sumitwebdev001@gmail.com">sumitwebdev001@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+91-8360671237</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>Batala , Punjab</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>GitHub</h4>
+                            <a href="https://github.com/sumit007-ui" target="_blank">github.com/sumit007-ui</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-external-link-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>More Info</h4>
+                            <a href="https://bento.me/sumiiit" target="_blank">bento.me/sumiiit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <spline-viewer class="animation-3d" url="https://prod.spline.design/GRSFGoiZn4u8uJhX/scene.splinecode"></spline-viewer>
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.24/build/spline-viewer.js"></script>
+            
+            <script>
+                const menuBtn = document.getElementById('menu-btn');
+                const navLinks = document.getElementById('nav-links');
+                
+                menuBtn.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    menuBtn.querySelector('i').classList.toggle('fa-bars');
+                    menuBtn.querySelector('i').classList.toggle('fa-times');
+                });
+            </script>
+</body>
+</html>

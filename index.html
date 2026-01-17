@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <title>Portfolio</title>
+</head>
+<body>
+    <img class="image-gradient" src="gradient.png" alt="Gradient Image">
+    <div class="layer-blur"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="logo" >
+            <a href="index.html" data-aos="fade-down" data-aos-duration="1500">CodeHub</a>
+            </h1>
+
+            <div class="menu-btn" id="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="index.html"  data-aos="fade-down" data-aos-duration="1000">Home</a>
+                <a href="about.html"  data-aos="fade-down" data-aos-duration="1500">About</a>
+                <a href="project.html"  data-aos="fade-down" data-aos-duration="2000">Projects</a>
+                <a href="contact.html"  data-aos="fade-down" data-aos-duration="2500">Contact</a>
+                <a href="https://www.youtube.com/@CodeHub-j9o4q" target="_blank" data-aos="fade-down" data-aos-duration="3000">YouTube</a>
+            </nav>
+
+            <div class="github">
+                <a href="https://github.com/sumit007-ui"  data-aos="fade-down" data-aos-duration="3500">Github</a>
+            </div>
+            
+        </header>
+
+        <main>
+                <div class="content">
+                    <div class="tag-box" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="tag">NATIONAL HACKATHON WINNER &wedbar;</div>
+                    </div>
+
+                    <h1 data-aos="fade-right" data-aos-duration="1500">PREMIUM WEBSITES, <br> MOBILE APPS & AI SOLUTIONS</h1>
+                    <p class="description" data-aos="fade-right" data-aos-duration="2000">Founder of <strong>RunnSeegaa</strong> (E-commerce App) & National Hackathon Winner with 4+ titles. We build premium digital products from ₹500 to ₹2,00,000+, including high-performance apps and AI solutions.</p>
+
+                    <div class="skills-mini" data-aos="fade-up" data-aos-duration="2500">
+                        <span>Python</span> &bull; <span>Dart</span> &bull; <span>Flutter</span> &bull; <span>Node.js</span> &bull; <span>MongoDB</span>
+                    </div>
+
+                    <div class="buttons" data-aos="fade-up" data-aos-duration="3000">
+                        <a href="https://www.linkedin.com/in/sumit-kumar-dev001/" class="btn-get-started">linkedin&gt;</a>
+                        <a href="contact.html" class="btn-get-signing">GetStarted &gt;</a>   
+                    </div>
+                </div>
+        </main>
+        <spline-viewer class="robot-3d" url="https://prod.spline.design/MsJ2RnH0RtJtuKC6/scene.splinecode"></spline-viewer>
+    </div>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.24/build/spline-viewer.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        const menuBtn = document.getElementById('menu-btn');
+        const navLinks = document.getElementById('nav-links');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuBtn.querySelector('i').classList.toggle('fa-bars');
+            menuBtn.querySelector('i').classList.toggle('fa-times');
+        });
+    </script>
+    </body>
+</html>
