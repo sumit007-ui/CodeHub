@@ -1,5 +1,5 @@
 import { auth } from './firebase.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
 
 const authAreas = document.querySelectorAll('.auth-area');
 const btnShowLoginEls = document.querySelectorAll('.btn-show-login, .btn-show-login');
@@ -26,46 +26,46 @@ const signupMessage = document.getElementById('signup-message');
 const signupCta = document.getElementById('signup-cta');
 
 function clearConfetti() { if (confettiLayer) confettiLayer.innerHTML = ''; }
-function launchConfetti(count = 18) {
+function launchConfetti(count = 50) {
   if (!confettiLayer) return;
   clearConfetti();
-  const colors = ['#ff3b30','#ffcc00','#4cd964','#007aff','#ff2d55','#7f42a7'];
-  for (let i=0;i<count;i++){
+  const colors = ['#ff3b30', '#ffcc00', '#4cd964', '#007aff', '#ff2d55', '#7f42a7'];
+  for (let i = 0; i < count; i++) {
     const el = document.createElement('div');
     el.className = 'confetti-piece';
     el.style.background = colors[i % colors.length];
-    el.style.left = (10 + Math.random()*80) + '%';
-    el.style.top = (Math.random()*20) + 'px';
-    el.style.width = (6 + Math.random()*10) + 'px';
-    el.style.height = (10 + Math.random()*12) + 'px';
-    el.style.animationDelay = (Math.random()*300) + 'ms';
-    el.style.transform = `translateY(-60px) rotate(${Math.random()*180}deg)`;
+    el.style.left = (10 + Math.random() * 80) + '%';
+    el.style.top = (Math.random() * 20) + 'px';
+    el.style.width = (6 + Math.random() * 10) + 'px';
+    el.style.height = (10 + Math.random() * 12) + 'px';
+    el.style.animationDelay = (Math.random() * 300) + 'ms';
+    el.style.transform = `translateY(-60px) rotate(${Math.random() * 180}deg)`;
     confettiLayer.appendChild(el);
   }
 }
 
-function showSignupPopup(userEmail){
+function showSignupPopup(userEmail, title = 'Welcome!') {
   if (!signupPopup) return;
-  signupTitle.textContent = 'Welcome!';
+  signupTitle.textContent = title;
   signupMessage.innerHTML = `Hi <strong>${userEmail}</strong> — you got <strong>5% OFF</strong> on all projects 🎉`;
   signupPopup.style.display = 'flex';
-  signupPopup.setAttribute('aria-hidden','false');
-  launchConfetti(20);
-  setTimeout(()=>{ if (signupPopup) signupPopup.classList.add('show'); }, 10);
+  signupPopup.setAttribute('aria-hidden', 'false');
+  launchConfetti(50);
+  setTimeout(() => { if (signupPopup) signupPopup.classList.add('show'); }, 10);
   // auto-close after 6s
-  setTimeout(()=>{ hideSignupPopup(); }, 6000);
+  setTimeout(() => { hideSignupPopup(); }, 6000);
 }
 
-function hideSignupPopup(){
+function hideSignupPopup() {
   if (!signupPopup) return;
   signupPopup.classList.remove('show');
-  signupPopup.setAttribute('aria-hidden','true');
+  signupPopup.setAttribute('aria-hidden', 'true');
   clearConfetti();
   signupPopup.style.display = 'none';
 }
 
 signupClose?.addEventListener('click', hideSignupPopup);
-signupCta?.addEventListener('click', ()=>{ hideSignupPopup(); document.querySelector('a[href="#projects"]').scrollIntoView({behavior:'smooth'}); });
+signupCta?.addEventListener('click', () => { hideSignupPopup(); document.querySelector('a[href="#projects"]').scrollIntoView({ behavior: 'smooth' }); });
 
 function show(el) { if (!el) return; el.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
 function hide(el) { if (!el) return; el.style.display = 'none'; document.body.style.overflow = ''; }
@@ -83,7 +83,7 @@ registerForm?.addEventListener('submit', async (e) => {
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
     hide(registerModal);
     // show celebratory popup for new signups
-    try { showSignupPopup(userCred.user.email); } catch(e){ console.warn(e); }
+    try { showSignupPopup(userCred.user.email, 'Welcome!'); } catch (e) { console.warn(e); }
   } catch (err) {
     alert(err.message);
   }
@@ -94,9 +94,9 @@ loginForm?.addEventListener('submit', async (e) => {
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const userCred = await signInWithEmailAndPassword(auth, email, password);
     hide(loginModal);
-    alert('Logged in successfully');
+    try { showSignupPopup(userCred.user.email, 'Welcome Back!'); } catch (e) { console.warn(e); }
   } catch (err) {
     alert(err.message);
   }
@@ -104,16 +104,21 @@ loginForm?.addEventListener('submit', async (e) => {
 
 // Google sign-in (popup)
 async function googleSignIn() {
+  console.log("Starting Google Sign In...");
   const provider = new GoogleAuthProvider();
   try {
+    console.log("Calling signInWithPopup...");
     const result = await signInWithPopup(auth, provider);
+    console.log("signInWithPopup result:", result);
     hide(loginModal);
     hide(registerModal);
-    // If this is a new user, show signup popup
-    if (result?.additionalUserInfo?.isNewUser) {
-      try { showSignupPopup(result.user.email); } catch(e){ console.warn(e); }
-    }
+
+    // Show signup popup for ALL Google users (new or returning)
+    const title = result?.additionalUserInfo?.isNewUser ? 'Welcome!' : 'Welcome Back!';
+    try { showSignupPopup(result.user.email, title); } catch (e) { console.warn(e); }
+
   } catch (err) {
+    console.error("Google Sign-In Error:", err);
     alert(err.message);
   }
 }
@@ -147,4 +152,4 @@ onAuthStateChanged(auth, (user) => {
   renderAuth(user);
 });
 
-export { currentUser };
+export { currentUser, showSignupPopup };

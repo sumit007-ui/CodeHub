@@ -1,7 +1,8 @@
 import { db } from './firebase.js';
-import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js';
+import { collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js';
 import { auth, } from './firebase.js';
-import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js';
+import { showSignupPopup } from './auth.js';
+import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js';
 
 const contactForm = document.getElementById('contact-form');
 const statusEl = document.getElementById('contact-status');
@@ -40,14 +41,17 @@ contactForm?.addEventListener('submit', async (e) => {
     statusEl.className = 'status-ok';
     statusEl.textContent = 'Message sent — thank you!';
 
+    // Show celebration popup
+    try { showSignupPopup(email, 'Message Sent!'); } catch (e) { console.warn(e); }
+
     // If user is registered/logged-in, show discount note briefly
     if (currentUser) {
       const badge = document.createElement('div');
       badge.className = 'discount-badge';
       badge.textContent = 'You get 5% OFF on all projects — applied!';
       statusEl.parentElement.appendChild(badge);
-      setTimeout(()=> badge.classList.add('show'), 50);
-      setTimeout(()=> badge.remove(), 6000);
+      setTimeout(() => badge.classList.add('show'), 50);
+      setTimeout(() => badge.remove(), 6000);
     }
     contactForm.reset();
   } catch (err) {
